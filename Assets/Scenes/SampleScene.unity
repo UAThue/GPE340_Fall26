@@ -368,6 +368,52 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &342905851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342905853}
+  - component: {fileID: 342905854}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &342905853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342905851}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.72318, y: -1.5, z: 6.14041}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &342905854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342905851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8b7457179ee9143b9bf2cca100df10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestDeathObserver
+  playerPawnToTest: {fileID: 482094996}
+  playerControllerToTest: {fileID: 1074369000}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,6 +610,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 015c953c6832ad448b5a86d9bf70dcdf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 482094999}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 015c953c6832ad448b5a86d9bf70dcdf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 482095002}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 015c953c6832ad448b5a86d9bf70dcdf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 482095001}
   m_SourcePrefab: {fileID: 100100000, guid: 015c953c6832ad448b5a86d9bf70dcdf, type: 3}
 --- !u!1 &482094995 stripped
 GameObject:
@@ -636,6 +688,55 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &482095001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482094995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93db475e2671b94e9756fa3d6b1fa07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Exploder
+  explosionSize: 10
+  explosionForce: 1000
+  explosionDamage: 5
+  particleEffect: {fileID: 0}
+  explosionSound: {fileID: 0}
+--- !u!114 &482095002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482094995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48804814efafd7c4e9809003bdd2b398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  currentHealth: 30
+  maxHealth: 30
+  OnTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 482095001}
+        m_TargetAssemblyTypeName: Exploder, Assembly-CSharp
+        m_MethodName: Explode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &717557975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,6 +1106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerPlayer
   pawn: {fileID: 482094996}
+  lives: 3
   playerCamera: {fileID: 330585545}
 --- !u!4 &1074369001
 Transform:
@@ -1232,3 +1334,4 @@ SceneRoots:
   - {fileID: 2062971445}
   - {fileID: 194463174}
   - {fileID: 717557980}
+  - {fileID: 342905853}

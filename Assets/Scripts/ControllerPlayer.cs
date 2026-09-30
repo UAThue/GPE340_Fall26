@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class ControllerPlayer : Controller
 {
+    [Header("Data")]
+    [SerializeField] private int lives = 3;
+
+    [Header("Key Objects")]
     public Camera playerCamera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,14 +22,38 @@ public class ControllerPlayer : Controller
         MakeDecisions();
     }
 
+    public void SubtractLife()
+    {
+        lives--;
+    }
+
     public override void Possess(Pawn pawnToPossess)
     {
         pawnToPossess.controller = this;
         pawn = pawnToPossess;
+
+        // Check if that pawn has a health component
+        Health pawnHealth = pawn.GetComponent<Health>();
+
+        // If so, then add "SubtractLife()" to the OnDeath event for that pawn
+        if (pawnHealth != null)
+        {
+            pawnHealth.OnDeath.AddListener(SubtractLife);
+        }
+
     }
 
     public override void UnPossess()
     {
+        // Check if that pawn has a health component
+        Health pawnHealth = pawn.GetComponent<Health>();
+        // If so, then REMOVE "SubtractLife()" from the OnDeath event for that pawn
+        if (pawnHealth != null)
+        {
+            pawnHealth.OnDeath.RemoveListener(SubtractLife);
+        }
+
+        // Disconnect the pawn
         pawn.controller = null;
         pawn = null;
     }
