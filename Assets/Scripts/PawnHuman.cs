@@ -1,17 +1,16 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 [RequireComponent(typeof(Animator))]
 public class PawnHuman : Pawn
 {
-    public Animator anim;
+    private Animator animator;
     
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         // Get the animator component
-        anim = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -52,8 +51,8 @@ public class PawnHuman : Pawn
         /**** VERSION 2 - goal is "World Movement" (character moves N,S,E,W)   */
         // Use "moveDirection" (input) as a WORLD direction to move! Covert that to find out the local direction we need to pass to animator.
         moveDirection = transform.InverseTransformDirection(moveDirection);
-        anim.SetFloat("Forward", moveDirection.z);
-        anim.SetFloat("Right", moveDirection.x);
+        animator.SetFloat("Forward", moveDirection.z);
+        animator.SetFloat("Right", moveDirection.x);
     }
 
     public override void RotateToLookAt( Vector3 pointToLookAt )
@@ -67,6 +66,22 @@ public class PawnHuman : Pawn
 
             // Rotate slightly towards that target rotation
             transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    public void OnAnimatorMove()
+    {
+        // After the animation runs
+        // Use root motion to move the game object
+        transform.position = animator.rootPosition;
+        transform.rotation = animator.rootRotation;
+
+        // If we have a NavMeshAgent on our controller,
+        ControllerAI aiController = controller as ControllerAI;
+        if (aiController != null)
+        {
+            // Set our navMeshAgent to understand it is as the position from the animator
+            aiController.agent.nextPosition = animator.rootPosition;
         }
     }
 }
