@@ -88,6 +88,26 @@ public class ControllerPlayer : Controller
             // DO NOTHING
         }
 
+        // Shooting
+        if (Input.GetButtonDown("Fire1"))
+        {
+            pawn.weapon.OnPrimaryFireStart.Invoke();
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            pawn.weapon.OnPrimaryFireEnd.Invoke();
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            pawn.weapon.OnSecondaryFireStart.Invoke();
+        }
+        if (Input.GetButtonUp("Fire2"))
+        {
+            pawn.weapon.OnSecondaryFireEnd.Invoke();
+        }
+
+
 
     }
 }

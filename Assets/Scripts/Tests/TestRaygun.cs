@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TestRaygun : MonoBehaviour
 {
-    public GA_RayGun gun;
+    public Weapon gun;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,7 +15,11 @@ public class TestRaygun : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            gun.Shoot();
+            gun.OnPrimaryFireStart.Invoke();
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            gun.OnPrimaryFireEnd.Invoke();
         }
     }
 }
