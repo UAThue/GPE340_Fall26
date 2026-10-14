@@ -5,6 +5,7 @@ using UnityEngine.InputSystem.XR;
 public class PawnHuman : Pawn
 {
     private Animator animator;
+
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -84,4 +85,55 @@ public class PawnHuman : Pawn
             aiController.agent.nextPosition = animator.rootPosition;
         }
     }
+
+    public void OnAnimatorIK(int layerIndex)
+    {
+        // Do I have a weapon?
+        if (weapon == null)
+        {
+            // If I have no weapon -- hands should do what the animation tells them to do
+            animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0f);
+            animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0f);
+            animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0f);
+            animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0f);
+        }
+        else
+        {
+            // Do I have a right hand point?  
+            if (weapon.rightHandPoint == null)
+            {
+                // NO! Then the right hand do whatever the animation data says to do
+                animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0f);
+                animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0f);
+            }
+            else
+            {
+                // Else, I have a right hand point on my weapon
+                // And set the position/rotation to the point in our weapon data
+                animator.SetIKPosition(AvatarIKGoal.RightHand, weapon.rightHandPoint.position);
+                animator.SetIKRotation(AvatarIKGoal.RightHand, weapon.rightHandPoint.rotation);
+                // Set the weight to 1
+                animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
+                animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1f);
+            }
+
+            // Do I have a left hand point?
+            if (weapon.leftHandPoint == null)
+            {
+                // NO? Then the left hand does what the animators says (weight of 0)
+                animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0f);
+                animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0f);
+            }
+            else
+            {
+                // Yes? Then set the left hand IKGoal and set the weight to 1
+                animator.SetIKPosition(AvatarIKGoal.LeftHand, weapon.leftHandPoint.position);
+                animator.SetIKRotation(AvatarIKGoal.LeftHand, weapon.leftHandPoint.rotation);
+                animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);
+                animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1f);
+            }
+
+        }
+    }
+
 }

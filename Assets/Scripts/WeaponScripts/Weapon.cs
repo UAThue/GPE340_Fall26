@@ -3,13 +3,16 @@ using UnityEngine.Events;
 
 public class Weapon : MonoBehaviour
 {
+    [Header("Weapon Events")]
     public UnityEvent OnEquip;
     public UnityEvent OnUnequip;
     public UnityEvent OnPrimaryFireStart;
     public UnityEvent OnPrimaryFireEnd;
     public UnityEvent OnSecondaryFireStart;
     public UnityEvent OnSecondaryFireEnd;
-
+    [Header("Inverse Kinematics")]
+    public Transform rightHandPoint;
+    public Transform leftHandPoint;
     public void Equip()
     {
         OnEquip.Invoke();

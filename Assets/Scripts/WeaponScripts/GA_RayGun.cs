@@ -19,6 +19,9 @@ public class GA_RayGun : GameAction
 
         // Instantiate our LaserBeam
         GameObject temp = Instantiate<GameObject>(laserBeamPrefab, transform.position, transform.rotation);
+        // Make it a child of the firepoint
+        temp.transform.parent = firepoint;
+
         LaserBeam theBeam = temp.GetComponent<LaserBeam>();
 
         // Set most of the laser data
