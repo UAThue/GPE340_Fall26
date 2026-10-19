@@ -5,6 +5,7 @@ using UnityEngine.InputSystem.XR;
 public class PawnHuman : Pawn
 {
     private Animator animator;
+    public Transform lookAtTarget;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,6 +21,10 @@ public class PawnHuman : Pawn
         
     }
 
+    /// <summary>
+    /// Input a controller that will possess this pawn.
+    /// </summary>
+    /// <param name="controllerToPosses">The controller that will possess this pawn</param>
     public override void Possess(Controller controllerToPosses)
     {
         controller.pawn = this;
@@ -68,6 +73,7 @@ public class PawnHuman : Pawn
             // Rotate slightly towards that target rotation
             transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
         }
+     
     }
 
     public void OnAnimatorMove()
@@ -88,6 +94,23 @@ public class PawnHuman : Pawn
 
     public void OnAnimatorIK(int layerIndex)
     {
+        // Do I have a lookat target?
+        if (lookAtTarget != null)
+        {
+            // If so, make the head look it
+            animator.SetLookAtPosition(lookAtTarget.position);
+            animator.SetLookAtWeight(1.0f);
+
+            // Optional Feature - Point our weapon at the target
+            // weapon.transform.forward = lookAtTarget.position - weapon.transform.position;
+        } else
+        {
+            // Let the animation control the head
+            animator.SetLookAtWeight(0.0f);
+        }
+
+
+
         // Do I have a weapon?
         if (weapon == null)
         {
