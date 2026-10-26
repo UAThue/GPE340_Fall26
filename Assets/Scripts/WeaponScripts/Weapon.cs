@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour
     [Header("Inverse Kinematics")]
     public Transform rightHandPoint;
     public Transform leftHandPoint;
+
     public void Equip()
     {
         OnEquip.Invoke();

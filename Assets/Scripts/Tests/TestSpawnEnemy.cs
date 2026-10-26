@@ -3,6 +3,7 @@ using UnityEngine;
 public class TestSpawnEnemy : MonoBehaviour
 {
     public GameObject AIPawn;
+    public Weapon enemyWeaponPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,11 +16,15 @@ public class TestSpawnEnemy : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            GameObject temp = Instantiate<GameObject>(AIPawn, Vector3.zero, Quaternion.identity);
-            Pawn thePawn = temp.GetComponent<Pawn>();
-            ControllerAI ai = temp.AddComponent<ControllerAI>();
-            ai.Possess(thePawn);
-            ai.targetTransform = GameManager.instance.playerPawn.transform;     
+            EnemyData enemyInfo = new EnemyData();
+            enemyInfo.maxHealth = 100;
+            enemyInfo.health = 1;
+            enemyInfo.moveSpeed = 1;
+            enemyInfo.rotationSpeed = 360;
+            enemyInfo.weapon = enemyWeaponPrefab;
+
+            GameManager.instance.enemyManager.SpawnEnemy(AIPawn, Vector3.zero, Quaternion.identity, enemyInfo);
+            
         }
     }
 }

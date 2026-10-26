@@ -4,6 +4,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public EnemyManager enemyManager;
+
     public GameObject playerPawn;
 
     private void Awake()

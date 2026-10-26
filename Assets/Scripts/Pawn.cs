@@ -14,4 +14,6 @@ public abstract class Pawn : MonoBehaviour
 
     public abstract void Possess(Controller controllerToPosses);
     public abstract void UnPossess();
+
+    public abstract void Equip(Weapon weapon);
 }

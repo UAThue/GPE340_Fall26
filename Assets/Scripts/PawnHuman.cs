@@ -6,6 +6,7 @@ public class PawnHuman : Pawn
 {
     private Animator animator;
     public Transform lookAtTarget;
+    public Transform weaponMountPoint;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,6 +37,31 @@ public class PawnHuman : Pawn
         // Drop our controller (and have our controller drop this pawn)
         controller.pawn = null;
         controller = null;
+    }
+
+    // TODO: Pawn equip weapons
+    public override void Equip ( Weapon weaponPrefab )
+    {
+        // If we passed in a weapon to equip
+        if (weaponPrefab != null) 
+        {
+            // Instantiate a new weapon of this type
+            GameObject newWeaponObject = Instantiate<GameObject> (weaponPrefab.gameObject, weaponMountPoint.position, weaponMountPoint.rotation) as GameObject;
+
+            // Attach the weapon to our mount point
+            newWeaponObject.transform.parent = weaponMountPoint;
+
+            // Get the weapon component
+            Weapon newWeapon = newWeaponObject.GetComponent<Weapon>();
+
+            // If it has one
+            if (newWeapon != null)
+            {
+                // Then set our weapon to this new weapon
+                weapon = newWeapon;
+            }
+        }
+
     }
 
 

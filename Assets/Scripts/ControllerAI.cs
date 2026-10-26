@@ -7,7 +7,10 @@ public class ControllerAI : Controller
     [HideInInspector] public NavMeshAgent agent;
     public float stoppingDistance;
     public Transform targetTransform;
+    public float viewAngle;
+    public float shootDistance;
     private Vector3 desiredVelocity = Vector3.zero;
+
 
     // Start is called before the first frame update
     protected void Start()
@@ -61,14 +64,9 @@ public class ControllerAI : Controller
         pawn = null;
     }
 
-    public override void MakeDecisions()
-    {
-        // If we don't have a pawn, we can't make decisions for it, so do nothing
-        if (pawn == null)
-        {
-            return;
-        }
 
+    public void SeekTarget ()
+    {
         // Set our NavMeshAgent to seek our target
         agent.SetDestination(targetTransform.position);
 
@@ -80,5 +78,61 @@ public class ControllerAI : Controller
 
         // Look towards the player
         pawn.RotateToLookAt(targetTransform.position);
+    }
+
+    public void FindTarget()
+    {
+        // Otherwise
+        // Find the first player controller we can find
+        ControllerPlayer player = FindFirstObjectByType<ControllerPlayer>();
+
+        // If that controller exists and it has a pawn, set it as the target
+        if (player != null && player.pawn != null)
+        {
+            targetTransform = player.pawn.transform;
+        }
+    }
+
+    public override void MakeDecisions()
+    {
+        // If we don't have a pawn, we can't make decisions for it, so do nothing
+        if (pawn == null)
+        {
+            return;
+        }
+
+        // If we have a target -- seek it
+        if (targetTransform != null)
+        {
+            SeekTarget();
+            TryShoot();
+
+        } 
+        else
+        {
+            FindTarget();
+        }
+    }
+
+    public virtual void TryShoot()
+    {
+        // If we are close enough to the player, start shooting
+        if (Vector3.Distance(pawn.transform.position, targetTransform.position) <= shootDistance)
+        {
+            // If they are in the view angle
+            Vector3 vectorToTarget = targetTransform.position - pawn.transform.position;
+            float angleToTarget = Vector3.Angle(pawn.transform.forward, vectorToTarget);
+            if ( angleToTarget <= viewAngle )
+            {
+                // Start shooting
+                pawn.weapon.PrimaryFireStart();
+            }
+
+        } else
+        {
+            // We are too far from the player, stop shooting
+            pawn.weapon.PrimaryFireEnd();
+        }
+
     }
 }

@@ -1,11 +1,20 @@
 using UnityEngine;
+using UnityEngine.Audio;
+[RequireComponent (typeof(AudioSource))]
 
 public class GA_PlaySound : GameAction
 {
-    public AudioClip soundToPlay;
+    public AudioResource soundToPlay;
+    private AudioSource audioSource;
+
+    public void Awake()
+    {
+        audioSource = GetComponent<AudioSource> ();
+    }
 
     public void PlaySound()
     {
-        AudioSource.PlayClipAtPoint(soundToPlay, transform.position);
+        audioSource.resource = soundToPlay;
+        audioSource.Play();
     }
 }
