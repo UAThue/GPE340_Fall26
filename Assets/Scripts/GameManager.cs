@@ -1,10 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour
 {
+
+
     public static GameManager instance;
+
+    [Header("Enemies and Spawn Points")]
     public EnemyManager enemyManager;
+    public List<PawnSpawnPoint> spawnPoints;
 
     public GameObject playerPawn;
 
@@ -35,6 +41,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void DoStuff()
     {
+        if (spawnPoints[0].type == PawnSpawnPoint.SpawnPointType.Enemy)
+        {
+            // Spawn enemy
+        }
 
     }
 

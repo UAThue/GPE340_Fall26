@@ -1,7 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public List<EnemyWave> GameWaves;
+
+    public struct EnemySpawn
+    {
+        public GameObject enemyPrefab;
+        public float chanceToSpawn;
+    }
+
+    public struct Wave
+    {
+        public List<EnemySpawn> spawns;        
+    }
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,7 +28,6 @@ public class EnemyManager : MonoBehaviour
     {
         
     }
-
 
     public void SpawnEnemy ( GameObject enemyPawnPrefab, Vector3 position, Quaternion rotation, EnemyData data)
     {
