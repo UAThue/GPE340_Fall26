@@ -27,7 +27,7 @@ public class ControllerPlayer : Controller
         lives--;
     }
 
-    public override void Possess(Pawn pawnToPossess)
+    public override void Possess(Pawn pawnToPossess, bool showDebug = false)
     {
         pawnToPossess.controller = this;
         pawn = pawnToPossess;
@@ -60,6 +60,18 @@ public class ControllerPlayer : Controller
 
     public override void MakeDecisions()
     {
+        // TODO: Code for handling menus and pausing
+        /* if (Input.GetButtonDown("Pause"))
+        {
+            GameManager.instance.TogglePause();
+        }*/
+
+        // Quit early if the game is paused
+            if (GameManager.instance.isPaused)
+        {
+            return;
+        }
+
         // Get the move vector of our axes
         Vector3 moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 

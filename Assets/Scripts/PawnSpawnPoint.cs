@@ -49,12 +49,13 @@ public class PawnSpawnPoint : MonoBehaviour
 
         // Our size will be square on the X/Z, and only use the height
         Vector3 boxSize = new Vector3(gizmoBoxWidth, gizmoBoxHeight, gizmoBoxWidth);
-
         Gizmos.DrawCube(boxPosition, boxSize);
-
+        
         // DRAW THE RAY (LINE) pointing forward
         Gizmos.color = Color.red;
         Gizmos.DrawRay(boxPosition, transform.forward);
+
+        
     }
 
 

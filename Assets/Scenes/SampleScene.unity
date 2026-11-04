@@ -6155,6 +6155,9 @@ MonoBehaviour:
   enemyManager: {fileID: 2092665664}
   spawnPoints: []
   playerPawn: {fileID: 482094995}
+  isPaused: 0
+  targetTimeScale: 1
+  slowMoTransitionTime: 0.5
 --- !u!4 &2092665663
 Transform:
   m_ObjectHideFlags: 0

@@ -24,9 +24,30 @@ public class ControllerAI : Controller
         MakeDecisions();
     }
 
-
-    public override void Possess(Pawn pawnToPossess)
+    public virtual void SetTarget (Transform target)
     {
+        targetTransform = target;
+    }
+
+    public virtual void SetTarget (Pawn pawnToTarget)
+    {
+        SetTarget(pawnToTarget.transform);
+    }
+
+    public virtual void SetTarget (Controller controllerToTarget)
+    {
+        SetTarget(controllerToTarget.pawn);
+    }
+
+ 
+
+    public override void Possess(Pawn pawnToPossess, bool showDebug = false)
+    {
+        if (showDebug)
+        {
+            Debug.Log(gameObject.name + " has possessed " + pawnToPossess.gameObject.name);
+        }
+
         // Set the cotnroller and pawn variables
         pawnToPossess.controller = this;
         pawn = pawnToPossess;
