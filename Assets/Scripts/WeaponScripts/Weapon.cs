@@ -13,6 +13,8 @@ public class Weapon : MonoBehaviour
     [Header("Inverse Kinematics")]
     public Transform rightHandPoint;
     public Transform leftHandPoint;
+    [Header("UI Element")]
+    public Sprite UIIcon;
 
     public void Equip()
     {

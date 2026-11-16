@@ -16,6 +16,8 @@ public class GA_Autofire : GameAction
 
     public void Update()
     {
+        if (GameManager.instance.isPaused) { return; }
+
         if (isShooting)
         {
             if (Time.time >= lastShotTime + secondsPerShot)

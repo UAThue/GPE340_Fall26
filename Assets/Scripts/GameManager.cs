@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,25 +20,28 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-
-
-        
-
+              
     }
 
     // Update is called once per frame
     void Update()
     {
-        timeScale = Mathf.MoveTowards(timeScale, targetTimeScale, slowMoTransitionTime * Time.deltaTime);
-        Time.timeScale = timeScale;
+
     }
 
     /// <summary>
@@ -65,6 +68,8 @@ public class GameManager : MonoBehaviour
 
         // Set our animation/framerate 
         Time.timeScale = 0.0f;
+
+        SceneManager.LoadScene("PauseScreen", LoadSceneMode.Additive);
     }
 
     public void Unpause()
@@ -73,6 +78,9 @@ public class GameManager : MonoBehaviour
 
         // Set our animation/framerate 
         Time.timeScale = 1.0f;
+
+        // Unload the pause screen
+        SceneManager.UnloadSceneAsync("PauseScreen");
     }
 
     public void TogglePause()
@@ -85,6 +93,16 @@ public class GameManager : MonoBehaviour
         {
             Pause();
         }
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+
+    public void LoadGameplayScene()
+    {
+        SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
 
 
